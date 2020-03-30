@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnglishZilasTable extends Migration
+class CreateEnglishDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateEnglishZilasTable extends Migration
      */
     public function up()
     {
-        Schema::create('english_zilas', function (Blueprint $table) {
+        Schema::create('english_districts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('zila_name', 64)->nullable();
+            $table->string('district_name', 64)->nullable();
             $table->integer('total_cases')->default(0);
             $table->integer('total_recovered')->default(0);
             $table->integer('total_deaths')->default(0);
@@ -35,6 +35,6 @@ class CreateEnglishZilasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('english_zilas');
+        Schema::dropIfExists('english_districts');
     }
 }

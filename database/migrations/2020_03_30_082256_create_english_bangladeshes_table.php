@@ -20,6 +20,10 @@ class CreateEnglishBangladeshesTable extends Migration
             $table->integer('total_deaths')->default(0);
             $table->integer('active_cases')->default(0);
             $table->integer('mild_condition')->default(0);
+            $table->integer('total_quarantine')->default(0);
+            $table->integer('finished_quarantine')->default(0);
+            $table->integer('total_isolation')->default(0);
+            $table->integer('finished_isolation')->default(0);
             $table->integer('critical_condition')->default(0);
             $table->double('active_percentage')->default(0.00);
             $table->double('recovered_percentage')->default(0.00);

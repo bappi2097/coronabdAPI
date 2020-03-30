@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EnglishZila extends Model
+class EnglishDistrict extends Model
 {
     //
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\EnglishCountry;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -43,41 +44,44 @@ class MainController extends Controller
                 dd($data);
             }
         } catch (Exception $e) {
-            //
+            return false;
         }
-        return json_encode($data);
     }
     public function world()
     {
-        $client = new Client();
-        $url = "https://www.worldometers.info/coronavirus/";
-        $response = $client->request('GET', $url);
-        $isValidURL = $response->getStatusCode();
-        if ($isValidURL == 200) {
-            $dom = HtmlDomParser::file_get_html($url);
-            $total = $dom->find('div[class=maincounter-number]');
-            $total_cases = $this->trimCon($total[0]->text());
-            $total_deaths = $this->trimCon($total[1]->text());
-            $total_recovered = $this->trimCon($total[2]->text());
-            $active_cases = $this->trimCon($dom->find('div[class=number-table-main]')[0]->text());
-            $mild_condition = $this->trimCon($dom->find('span[class=number-table]')[0]->text());
-            $critical_condition = $this->trimCon($dom->find('span[class=number-table]')[1]->text());
-            $death_percentage = ($total_deaths / $total_cases) * 100;
-            $recovered_percentage = ($total_recovered / $total_cases) * 100;
-            $active_percentage = 100 - ($death_percentage + $recovered_percentage);
+        try {
+            $client = new Client();
+            $url = "https://www.worldometers.info/coronavirus/";
+            $response = $client->request('GET', $url);
+            $isValidURL = $response->getStatusCode();
+            if ($isValidURL == 200) {
+                $dom = HtmlDomParser::file_get_html($url);
+                $total = $dom->find('div[class=maincounter-number]');
+                $total_cases = $this->trimCon($total[0]->text());
+                $total_deaths = $this->trimCon($total[1]->text());
+                $total_recovered = $this->trimCon($total[2]->text());
+                $active_cases = $this->trimCon($dom->find('div[class=number-table-main]')[0]->text());
+                $mild_condition = $this->trimCon($dom->find('span[class=number-table]')[0]->text());
+                $critical_condition = $this->trimCon($dom->find('span[class=number-table]')[1]->text());
+                $death_percentage = ($total_deaths / $total_cases) * 100;
+                $recovered_percentage = ($total_recovered / $total_cases) * 100;
+                $active_percentage = 100 - ($death_percentage + $recovered_percentage);
 
-            $data = [
-                'total_cases' => $total_cases,
-                'total_deaths' => $total_deaths,
-                'total_recovered' => $total_recovered,
-                'active_cases' => $active_cases,
-                'mild_condition' => $mild_condition,
-                'critical_condition' => $critical_condition,
-                'death_percentage' => $death_percentage,
-                'recovered_percentage' => $recovered_percentage,
-                'active_percentage' => $active_percentage,
-            ];
-            dd($data);
+                $data = [
+                    'total_cases' => $total_cases,
+                    'total_deaths' => $total_deaths,
+                    'total_recovered' => $total_recovered,
+                    'active_cases' => $active_cases,
+                    'mild_condition' => $mild_condition,
+                    'critical_condition' => $critical_condition,
+                    'death_percentage' => $death_percentage,
+                    'recovered_percentage' => $recovered_percentage,
+                    'active_percentage' => $active_percentage,
+                ];
+                dd($data);
+            }
+        } catch (Exception $e) {
+            return false;
         }
     }
 
@@ -93,36 +97,37 @@ class MainController extends Controller
             $tbodys = $dom->find('tbody');
             $dataEn = array();
             $cnt = 0;
-            foreach ($tbodys as $tbody) {
-                $trs = $tbody->find('tr');
-                for ($i = 1; $i < count($trs); $i++) {
-                    $td = $trs[$i]->find('td');
-                    $dataEn[$cnt]['country_name'] = (!empty($td[0]->find('a')) ? $td[0]->find('a')[0]->text() : $td[0]->text());
-                    $dataBn[$cnt]['country_name'] = $this->etobno($dataEn[$cnt]['country_name']);
-                    $dataEn[$cnt]['total_cases'] = $this->trimCon($td[1]->text());
-                    $dataBn[$cnt]['total_cases'] = $this->etobno($dataEn[$cnt]['total_cases']);
-                    $dataEn[$cnt]['new_cases'] = $this->trimCon($td[2]->text());
-                    $dataBn[$cnt]['new_cases'] = $this->etobno($dataEn[$cnt]['new_cases']);
-                    $dataEn[$cnt]['total_deaths'] = $this->trimCon($td[3]->text());
-                    $dataBn[$cnt]['total_deaths'] = $this->etobno($dataEn[$cnt]['total_deaths']);
-                    $dataEn[$cnt]['new_deaths'] = $this->trimCon($td[4]->text());
-                    $dataBn[$cnt]['new_deaths'] = $this->etobno($dataEn[$cnt]['new_deaths']);
-                    $dataEn[$cnt]['total_recovered'] = $this->trimCon($td[5]->text());
-                    $dataBn[$cnt]['total_recovered'] = $this->etobno($dataEn[$cnt]['total_recovered']);
-                    $dataEn[$cnt]['active_cases'] = $this->trimCon($td[6]->text());
-                    $dataBn[$cnt]['active_cases'] = $this->etobno($dataEn[$cnt]['active_cases']);
-                    $dataEn[$cnt]['critical_cases'] = $this->trimCon($td[7]->text());
-                    $dataBn[$cnt]['critical_cases'] = $this->etobno($dataEn[$cnt]['critical_cases']);
-                    $dataEn[$cnt]['death_percentage'] =  ($dataEn[$cnt]['total_deaths'] / $dataEn[$cnt]['total_cases']) * 100;
-                    $dataBn[$cnt]['death_percentage'] =  $this->etobno($dataEn[$cnt]['death_percentage']);
-                    $dataEn[$cnt]['recovered_percentage'] =  ($dataEn[$cnt]['total_recovered'] / $dataEn[$cnt]['total_cases']) * 100;
-                    $dataBn[$cnt]['recovered_percentage'] =  $this->etobno($dataEn[$cnt]['recovered_percentage']);
-                    $dataEn[$cnt]['active_percentage'] =  100 - ($dataEn[$cnt]['death_percentage'] + $dataEn[$cnt]['recovered_percentage']);
-                    $dataBn[$cnt]['active_percentage'] =  $this->etobno($dataEn[$cnt]['active_percentage']);;
-                    $cnt++;
-                }
+            $c = 0;
+            // foreach ($tbodys as $tbody) {
+            $trs = $tbodys[0]->find('tr');
+            for ($i = 1; $i < count($trs); $i++) {
+                $td = $trs[$i]->find('td');
+                $dataEn[$cnt]['country_name'] = (!empty($td[0]->find('a')) ? $td[0]->find('a')[0]->text() : $td[0]->text());
+                $dataBn[$cnt]['country_name'] = $dataEn[$cnt]['country_name'];
+                $dataBn[$cnt]['country_name_bnagla'] = $dataEn[$cnt]['country_name'];
+                $dataEn[$cnt]['total_cases'] = $this->trimCon($td[1]->text());
+                $dataBn[$cnt]['total_cases'] = $this->etobno($dataEn[$cnt]['total_cases']);
+                $dataEn[$cnt]['new_cases'] = $this->trimCon($td[2]->text());
+                $dataBn[$cnt]['new_cases'] = $this->etobno($dataEn[$cnt]['new_cases']);
+                $dataEn[$cnt]['total_deaths'] = $this->trimCon($td[3]->text());
+                $dataBn[$cnt]['total_deaths'] = $this->etobno($dataEn[$cnt]['total_deaths']);
+                $dataEn[$cnt]['new_deaths'] = $this->trimCon($td[4]->text());
+                $dataBn[$cnt]['new_deaths'] = $this->etobno($dataEn[$cnt]['new_deaths']);
+                $dataEn[$cnt]['total_recovered'] = $this->trimCon($td[5]->text());
+                $dataBn[$cnt]['total_recovered'] = $this->etobno($dataEn[$cnt]['total_recovered']);
+                $dataEn[$cnt]['active_cases'] = $this->trimCon($td[6]->text());
+                $dataBn[$cnt]['active_cases'] = $this->etobno($dataEn[$cnt]['active_cases']);
+                $dataEn[$cnt]['critical_cases'] = $this->trimCon($td[7]->text());
+                $dataBn[$cnt]['critical_cases'] = $this->etobno($dataEn[$cnt]['critical_cases']);
+                $dataEn[$cnt]['death_percentage'] =  ($dataEn[$cnt]['total_deaths'] / $dataEn[$cnt]['total_cases']) * 100;
+                $dataBn[$cnt]['death_percentage'] =  $this->etobno($dataEn[$cnt]['death_percentage']);
+                $dataEn[$cnt]['recovered_percentage'] =  ($dataEn[$cnt]['total_recovered'] / $dataEn[$cnt]['total_cases']) * 100;
+                $dataBn[$cnt]['recovered_percentage'] =  $this->etobno($dataEn[$cnt]['recovered_percentage']);
+                $dataEn[$cnt]['active_percentage'] =  100 - ($dataEn[$cnt]['death_percentage'] + $dataEn[$cnt]['recovered_percentage']);
+                $dataBn[$cnt]['active_percentage'] =  $this->etobno($dataEn[$cnt]['active_percentage']);;
+                $cnt++;
             }
-            dd($dataBn);
+            dd(EnglishCountry::insert($dataEn));
         }
     }
 
