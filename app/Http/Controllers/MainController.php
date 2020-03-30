@@ -140,10 +140,13 @@ class MainController extends Controller
             foreach ($rows as $row) {
                 $data[$cnt]['zila_name'] = $row->find('div')[0]->text();
                 $data[$cnt]['total_cases'] = $this->encodetoeno($row->find('div')[1]->text());
+                $data[$cnt]['total_recovered'] = $this->encodetoeno($row->find('div')[3]->text());
+                $data[$cnt]['total_deaths'] = $this->encodetoeno($row->find('div')[4]->text());
                 $data[$cnt]['active_cases'] = $this->encodetoeno($row->find('div')[2]->text());
-                $data[$cnt]['recovered_cases'] = $this->encodetoeno($row->find('div')[3]->text());
-                $data[$cnt]['deaths'] = $this->encodetoeno($row->find('div')[4]->text());
                 $data[$cnt]['quarantine'] = $this->encodetoeno($row->find('div')[5]->text());
+                $data[$cnt]['death_percentage'] = ($data[$cnt]['total_deaths'] / $data[$cnt]['total_cases']) * 100;
+                $data[$cnt]['recovered_percentage'] = ($data[$cnt]['total_recovered'] / $data[$cnt]['total_cases']) * 100;
+                $data[$cnt]['active_percentage'] = 100 - ($data[$cnt]['death_percentage'] + $data[$cnt]['recovered_percentage']);
                 $cnt++;
             }
         }
