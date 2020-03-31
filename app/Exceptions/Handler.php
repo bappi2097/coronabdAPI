@@ -53,16 +53,24 @@ class Handler extends ExceptionHandler
         $data = [
             'status' => "wrong route",
             'route_details' => [
-                0 => '',
-                1 => '',
-                2 => '',
-                3 => '',
-                4 => '',
-                5 => '',
-                6 => '',
-                7 => '',
+                0 => route('bn-bangladesh'),
+                1 => route('en-bangladesh'),
+                2 => route('bn-world'),
+                3 => route('en-world'),
+                4 => route('bn-countries'),
+                5 => route('en-countries'),
+                6 => route('bn-districts'),
+                7 => route('en-districts'),
+                8 => route('bn-country-name', ['name' => 'CountryName']),
+                9 => route('en-country-name', ['name' => 'CountryName']),
+                10 => route('bn-district-name', ['name' => 'DistrictName']),
+                10 => route('en-district-name', ['name' => 'DistrictName']),
             ],
-            'contact_info' => "https://web.facebook.com/bappi.saha.75033"
+            'contact_info' => [
+                "facebook" => "https://web.facebook.com/bappi.saha.75033",
+                "mail" => "bappi35-2097@diu.edu.bd",
+            ],
+            'visit' => "https://coronabd.xyz/",
         ];
 
         if ($this->isHttpException($exception)) {
