@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\BanglaZila;
 use GuzzleHttp\Client;
+use App\BanglaDistrict;
+use App\EnglishDistrict;
 use Illuminate\Http\Request;
 use KubAT\PhpSimple\HtmlDomParser;
 
@@ -16,11 +17,11 @@ class DBController extends Controller
         $tr = $dom->find('tbody')[0]->find('tr');
         $cnt = 0;
         for ($i = 1; $i < 65; $i++) {
-            $data[$cnt]['zila_name'] = $this->delDestrict($tr[$i]->find('td')[0]->find('a')[0]->text());
-            $data[$cnt]['zila_name_bangla'] = $tr[$i]->find('td')[1]->text();
+            $data[$cnt]['district_name'] = $this->delDestrict($tr[$i]->find('td')[0]->find('a')[0]->text());
+            // $data[$cnt]['district_name_bangla'] = $tr[$i]->find('td')[1]->text();
             $cnt++;
         }
-        dd(BanglaZila::insert($data));
+        dd(EnglishDistrict::insert($data));
     }
     protected function delDestrict($str)
     {

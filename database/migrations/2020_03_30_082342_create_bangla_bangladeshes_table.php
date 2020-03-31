@@ -19,12 +19,11 @@ class CreateBanglaBangladeshesTable extends Migration
             $table->string('total_recovered', 16)->default("0");
             $table->string('total_deaths', 16)->default("0");
             $table->string('active_cases', 16)->default("0");
-            $table->string('mild_condition', 16)->default("0");
             $table->string('total_quarantine', 16)->default("0");
             $table->string('finished_quarantine', 16)->default("0");
             $table->string('total_isolation', 16)->default("0");
             $table->string('finished_isolation', 16)->default("0");
-            $table->string('critical_condition', 16)->default("0");
+            $table->string('critical_cases', 16)->default("0");
             $table->string('active_percentage', 20)->default("0");
             $table->string('recovered_percentage', 20)->default("0");
             $table->string('death_percentage', 20)->default("0");

@@ -23,7 +23,6 @@ class CreateBanglaCountriesTable extends Migration
             $table->string('total_deaths', 16)->default("0");
             $table->string('new_deaths', 16)->default("0");
             $table->string('active_cases', 16)->default("0");
-            // $table->string('mild_condition', 16)->default("0");
             $table->string('critical_cases', 16)->default("0");
             $table->string('active_percentage', 20)->default("0");
             $table->string('recovered_percentage', 20)->default("0");

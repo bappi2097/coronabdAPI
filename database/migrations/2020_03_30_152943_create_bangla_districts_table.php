@@ -17,6 +17,7 @@ class CreateBanglaDistrictsTable extends Migration
             $table->bigIncrements('id');
             $table->string('district_name', 64)->nullable();
             $table->string('district_name_bangla', 64)->nullable();
+            $table->string('division_name', 64)->nullable();
             $table->string('total_cases', 16)->default("0");
             $table->string('total_recovered', 16)->default("0");
             $table->string('total_deaths', 16)->default("0");

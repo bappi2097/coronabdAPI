@@ -50,6 +50,27 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $data = [
+            'status' => "wrong route",
+            'route_details' => [
+                0 => '',
+                1 => '',
+                2 => '',
+                3 => '',
+                4 => '',
+                5 => '',
+                6 => '',
+                7 => '',
+            ],
+            'contact_info' => "https://web.facebook.com/bappi.saha.75033"
+        ];
+
+        if ($this->isHttpException($exception)) {
+            $code = $exception->getStatusCode();
+            if ($code == '404') {
+                return response()->json($data);
+            }
+        }
         return parent::render($request, $exception);
     }
 }

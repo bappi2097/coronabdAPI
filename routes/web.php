@@ -11,9 +11,5 @@
 |
 */
 
-Route::get('/quarantine', 'MainController@quarantine')->name('quarantine');
-Route::get('/world', 'MainController@world')->name('world');
-Route::get('/countries', 'MainController@countries')->name('countries');
-Route::get('/zilas', 'MainController@zilas')->name('zilas');
-Route::get('/test', 'MainController@test')->name('test');
-Route::get('/dbzila', 'DBController@zila');
+Route::get('/callall', 'DBInputController@callAll')->name('callall');
+// Route::get('')

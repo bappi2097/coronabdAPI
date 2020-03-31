@@ -16,6 +16,7 @@ class CreateEnglishDistrictsTable extends Migration
         Schema::create('english_districts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('district_name', 64)->nullable();
+            $table->string('division_name', 64)->nullable();
             $table->integer('total_cases')->default(0);
             $table->integer('total_recovered')->default(0);
             $table->integer('total_deaths')->default(0);
