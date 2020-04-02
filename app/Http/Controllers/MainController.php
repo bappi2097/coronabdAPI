@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
+    public function home()
+    {
+        $data = $this->error();
+        $data['status'] = 200;
+        return $data;
+    }
     public function callFunc()
     {
         dd($this->getEnglishAllDistrict());
@@ -31,6 +37,7 @@ class MainController extends Controller
     {
         $dataWorld = BanglaWorld::first();
         $data = [
+            'status' => 200,
             'data' => [
                 'total_cases' => $dataWorld->total_cases,
                 'total_recovered' => $dataWorld->total_recovered,
@@ -51,6 +58,7 @@ class MainController extends Controller
     {
         $dataWorld = EnglishWorld::first();
         $data = [
+            'status' => 200,
             'data' => [
                 'total_cases' => $dataWorld->total_cases,
                 'total_recovered' => $dataWorld->total_recovered,
@@ -71,6 +79,7 @@ class MainController extends Controller
     {
         $dataBangladesh = BanglaBangladesh::first();
         $data = [
+            'status' => 200,
             'data' => [
                 'total_cases' => $dataBangladesh->total_cases,
                 'total_recovered' => $dataBangladesh->total_recovered,
@@ -97,6 +106,7 @@ class MainController extends Controller
     {
         $dataBangladesh = EnglishBangladesh::first();
         $data = [
+            'status' => 200,
             'data' => [
                 'total_cases' => $dataBangladesh->total_cases,
                 'total_recovered' => $dataBangladesh->total_recovered,
@@ -140,6 +150,7 @@ class MainController extends Controller
             $cnt++;
         }
         $data = [
+            'status' => 200,
             "data" => $dataC,
             'source' => "https://www.worldometers.info/coronavirus/",
             'visit' => "https://coronabd.xyz/",
@@ -166,6 +177,7 @@ class MainController extends Controller
             $cnt++;
         }
         $data = [
+            'status' => 200,
             "data" => $dataC,
             'source' => "https://www.worldometers.info/coronavirus/",
             'visit' => "https://coronabd.xyz/",
@@ -191,6 +203,7 @@ class MainController extends Controller
             $cnt++;
         }
         $data = [
+            'status' => 200,
             "data" => $dataC,
             'source' => "https://www.somoynews.tv/coronavirus/bangladesh",
             'visit' => "https://coronabd.xyz/",
@@ -215,6 +228,7 @@ class MainController extends Controller
             $cnt++;
         }
         $data = [
+            'status' => 200,
             "data" => $dataC,
             'source' => "https://www.somoynews.tv/coronavirus/bangladesh",
             'visit' => "https://coronabd.xyz/",
@@ -238,35 +252,14 @@ class MainController extends Controller
             $dataC['recovered_percentage'] = $dataCountry->recovered_percentage;
             $dataC['death_percentage'] = $dataCountry->death_percentage;
             $data = [
+                'status' => 200,
                 "data" => $dataC,
                 'source' => "https://www.worldometers.info/coronavirus/",
                 'visit' => "https://coronabd.xyz/",
             ];
             return $data;
         } else {
-            $data = [
-                'status' => "wrong route",
-                'route_details' => [
-                    0 => route('bn-bangladesh'),
-                    1 => route('en-bangladesh'),
-                    2 => route('bn-world'),
-                    3 => route('en-world'),
-                    4 => route('bn-countries'),
-                    5 => route('en-countries'),
-                    6 => route('bn-districts'),
-                    7 => route('en-districts'),
-                    8 => route('bn-country-name', ['name' => 'CountryName']),
-                    9 => route('en-country-name', ['name' => 'CountryName']),
-                    10 => route('bn-district-name', ['name' => 'DistrictName']),
-                    10 => route('en-district-name', ['name' => 'DistrictName']),
-                ],
-                'contact_info' => [
-                    "facebook" => "https://web.facebook.com/bappi.saha.75033",
-                    "mail" => "bappi35-2097@diu.edu.bd",
-                ],
-                'visit' => "https://coronabd.xyz/",
-            ];
-            return $data;
+            return $this->error();
         }
     }
     public function getEnglishCountry($name)
@@ -285,35 +278,14 @@ class MainController extends Controller
             $dataC['recovered_percentage'] = $dataCountry->recovered_percentage;
             $dataC['death_percentage'] = $dataCountry->death_percentage;
             $data = [
+                'status' => 200,
                 "data" => $dataC,
                 'source' => "https://www.worldometers.info/coronavirus/",
                 'visit' => "https://coronabd.xyz/",
             ];
             return $data;
         } else {
-            $data = [
-                'status' => "wrong route",
-                'route_details' => [
-                    0 => route('bn-bangladesh'),
-                    1 => route('en-bangladesh'),
-                    2 => route('bn-world'),
-                    3 => route('en-world'),
-                    4 => route('bn-countries'),
-                    5 => route('en-countries'),
-                    6 => route('bn-districts'),
-                    7 => route('en-districts'),
-                    8 => route('bn-country-name', ['name' => 'CountryName']),
-                    9 => route('en-country-name', ['name' => 'CountryName']),
-                    10 => route('bn-district-name', ['name' => 'DistrictName']),
-                    10 => route('en-district-name', ['name' => 'DistrictName']),
-                ],
-                'contact_info' => [
-                    "facebook" => "https://web.facebook.com/bappi.saha.75033",
-                    "mail" => "bappi35-2097@diu.edu.bd",
-                ],
-                'visit' => "https://coronabd.xyz/",
-            ];
-            return $data;
+            return $this->error();
         }
     }
     public function getBanglaDistrict($name)
@@ -332,35 +304,14 @@ class MainController extends Controller
             $dataC['death_percentage'] = $dataDistrict->death_percentage;
             $dataC['quarantine'] = $dataDistrict->quarantine;
             $data = [
+                'status' => 200,
                 "data" => $dataC,
                 'source' => "https://www.somoynews.tv/coronavirus/bangladesh",
                 'visit' => "https://coronabd.xyz/",
             ];
             return $data;
         } else {
-            $data = [
-                'status' => "wrong route",
-                'route_details' => [
-                    0 => route('bn-bangladesh'),
-                    1 => route('en-bangladesh'),
-                    2 => route('bn-world'),
-                    3 => route('en-world'),
-                    4 => route('bn-countries'),
-                    5 => route('en-countries'),
-                    6 => route('bn-districts'),
-                    7 => route('en-districts'),
-                    8 => route('bn-country-name', ['name' => 'CountryName']),
-                    9 => route('en-country-name', ['name' => 'CountryName']),
-                    10 => route('bn-district-name', ['name' => 'DistrictName']),
-                    10 => route('en-district-name', ['name' => 'DistrictName']),
-                ],
-                'contact_info' => [
-                    "facebook" => "https://web.facebook.com/bappi.saha.75033",
-                    "mail" => "bappi35-2097@diu.edu.bd",
-                ],
-                'visit' => "https://coronabd.xyz/",
-            ];
-            return $data;
+            return $this->error();
         }
     }
     public function getEnglishDistrict($name)
@@ -378,35 +329,39 @@ class MainController extends Controller
             $dataC['death_percentage'] = $dataDistrict->death_percentage;
             $dataC['quarantine'] = $dataDistrict->quarantine;
             $data = [
+                'status' => 200,
                 "data" => $dataC,
                 'source' => "https://www.somoynews.tv/coronavirus/bangladesh",
                 'visit' => "https://coronabd.xyz/",
             ];
             return $data;
         } else {
-            $data = [
-                'status' => "wrong route",
-                'route_details' => [
-                    0 => route('bn-bangladesh'),
-                    1 => route('en-bangladesh'),
-                    2 => route('bn-world'),
-                    3 => route('en-world'),
-                    4 => route('bn-countries'),
-                    5 => route('en-countries'),
-                    6 => route('bn-districts'),
-                    7 => route('en-districts'),
-                    8 => route('bn-country-name', ['name' => 'CountryName']),
-                    9 => route('en-country-name', ['name' => 'CountryName']),
-                    10 => route('bn-district-name', ['name' => 'DistrictName']),
-                    10 => route('en-district-name', ['name' => 'DistrictName']),
-                ],
-                'contact_info' => [
-                    "facebook" => "https://web.facebook.com/bappi.saha.75033",
-                    "mail" => "bappi35-2097@diu.edu.bd",
-                ],
-                'visit' => "https://coronabd.xyz/",
-            ];
-            return $data;
+            return $this->error();
         }
+    }
+    protected function error()
+    {
+        return  [
+            'status' => 404,
+            'route_details' => [
+                0 => route('bn-bangladesh'),
+                1 => route('en-bangladesh'),
+                2 => route('bn-world'),
+                3 => route('en-world'),
+                4 => route('bn-countries'),
+                5 => route('en-countries'),
+                6 => route('bn-districts'),
+                7 => route('en-districts'),
+                8 => route('bn-country-name', ['name' => 'CountryName']),
+                9 => route('en-country-name', ['name' => 'CountryName']),
+                10 => route('bn-district-name', ['name' => 'DistrictName']),
+                11 => route('en-district-name', ['name' => 'DistrictName']),
+            ],
+            'contact_info' => [
+                "facebook" => "https://web.facebook.com/bappi.saha.75033",
+                "mail" => "bappi35-2097@diu.edu.bd",
+            ],
+            'visit' => "https://coronabd.xyz/",
+        ];
     }
 }

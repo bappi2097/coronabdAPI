@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', 'MainController@home')->name('home');
 Route::get('/callall', 'DBInputController@callAll')->name('callall');
 Route::get('/bn/bangladesh', 'MainController@getBanglaBangladesh')->name('bn-bangladesh');
 Route::get('/en/bangladesh', 'MainController@getEnglishBangladesh')->name('en-bangladesh');

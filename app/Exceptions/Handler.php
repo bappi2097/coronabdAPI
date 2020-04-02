@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         $data = [
-            'status' => "wrong route",
+            'status' => 404,
             'route_details' => [
                 0 => route('bn-bangladesh'),
                 1 => route('en-bangladesh'),
@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
                 8 => route('bn-country-name', ['name' => 'CountryName']),
                 9 => route('en-country-name', ['name' => 'CountryName']),
                 10 => route('bn-district-name', ['name' => 'DistrictName']),
-                10 => route('en-district-name', ['name' => 'DistrictName']),
+                11 => route('en-district-name', ['name' => 'DistrictName']),
             ],
             'contact_info' => [
                 "facebook" => "https://web.facebook.com/bappi.saha.75033",
